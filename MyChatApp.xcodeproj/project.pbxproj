@@ -13,6 +13,9 @@
 		0BD26A5C1EF8890F00560714 /* Decorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD26A5B1EF8890F00560714 /* Decorator.swift */; };
 		0BD26A691EF8A84200560714 /* TextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD26A681EF8A84200560714 /* TextHandler.swift */; };
 		0BD26A6B1EF8A84B00560714 /* TextBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD26A6A1EF8A84B00560714 /* TextBuilder.swift */; };
+		0BD26A6E1EF8AC7C00560714 /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD26A6D1EF8AC7C00560714 /* PhotoModel.swift */; };
+		0BD26A701EF8ADD100560714 /* PhotoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD26A6F1EF8ADD100560714 /* PhotoHandler.swift */; };
+		0BD26A721EF8ADDA00560714 /* PhotoBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD26A711EF8ADDA00560714 /* PhotoBuilder.swift */; };
 		0BF404D61EF87BE100BC68CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF404D51EF87BE100BC68CE /* AppDelegate.swift */; };
 		0BF404D81EF87BE100BC68CE /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF404D71EF87BE100BC68CE /* ChatLogController.swift */; };
 		0BF404DB1EF87BE100BC68CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BF404D91EF87BE100BC68CE /* Main.storyboard */; };
@@ -28,6 +31,9 @@
 		0BD26A5B1EF8890F00560714 /* Decorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decorator.swift; sourceTree = "<group>"; };
 		0BD26A681EF8A84200560714 /* TextHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextHandler.swift; sourceTree = "<group>"; };
 		0BD26A6A1EF8A84B00560714 /* TextBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBuilder.swift; sourceTree = "<group>"; };
+		0BD26A6D1EF8AC7C00560714 /* PhotoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
+		0BD26A6F1EF8ADD100560714 /* PhotoHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoHandler.swift; sourceTree = "<group>"; };
+		0BD26A711EF8ADDA00560714 /* PhotoBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBuilder.swift; sourceTree = "<group>"; };
 		0BF404D21EF87BE100BC68CE /* MyChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BF404D51EF87BE100BC68CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BF404D71EF87BE100BC68CE /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
@@ -62,6 +68,16 @@
 			name = "Text Message";
 			sourceTree = "<group>";
 		};
+		0BD26A6C1EF8AC6A00560714 /* Photo Message */ = {
+			isa = PBXGroup;
+			children = (
+				0BD26A6D1EF8AC7C00560714 /* PhotoModel.swift */,
+				0BD26A6F1EF8ADD100560714 /* PhotoHandler.swift */,
+				0BD26A711EF8ADDA00560714 /* PhotoBuilder.swift */,
+			);
+			name = "Photo Message";
+			sourceTree = "<group>";
+		};
 		0BF404C91EF87BE000BC68CE = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +105,7 @@
 				0BD26A571EF887AF00560714 /* DataSource.swift */,
 				0BD26A591EF887D100560714 /* ChatItemsController.swift */,
 				0BD26A541EF884D100560714 /* Text Message */,
+				0BD26A6C1EF8AC6A00560714 /* Photo Message */,
 				0BF404D91EF87BE100BC68CE /* Main.storyboard */,
 				0BF404DC1EF87BE100BC68CE /* Assets.xcassets */,
 				0BF404DE1EF87BE100BC68CE /* LaunchScreen.storyboard */,
@@ -237,12 +254,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BD26A6E1EF8AC7C00560714 /* PhotoModel.swift in Sources */,
 				0BD26A6B1EF8A84B00560714 /* TextBuilder.swift in Sources */,
 				0BD26A5A1EF887D100560714 /* ChatItemsController.swift in Sources */,
 				0BD26A561EF884E300560714 /* TextModel.swift in Sources */,
 				0BF404D81EF87BE100BC68CE /* ChatLogController.swift in Sources */,
 				0BD26A581EF887AF00560714 /* DataSource.swift in Sources */,
+				0BD26A721EF8ADDA00560714 /* PhotoBuilder.swift in Sources */,
 				0BF404D61EF87BE100BC68CE /* AppDelegate.swift in Sources */,
+				0BD26A701EF8ADD100560714 /* PhotoHandler.swift in Sources */,
 				0BD26A5C1EF8890F00560714 /* Decorator.swift in Sources */,
 				0BD26A691EF8A84200560714 /* TextHandler.swift in Sources */,
 			);
