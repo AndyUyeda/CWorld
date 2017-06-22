@@ -166,6 +166,7 @@
 				TargetAttributes = {
 					0BF404D11EF87BE100BC68CE = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = 4K4WF2L5K6;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -390,6 +391,7 @@
 			baseConfigurationReference = 16A3A473C88363A9462F976C /* Pods-MyChatApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4K4WF2L5K6;
 				INFOPLIST_FILE = MyChatApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Reveal-Inc.MyChatApp";
@@ -403,6 +405,7 @@
 			baseConfigurationReference = 1784EB2394669A57B3E7C946 /* Pods-MyChatApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4K4WF2L5K6;
 				INFOPLIST_FILE = MyChatApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Reveal-Inc.MyChatApp";
