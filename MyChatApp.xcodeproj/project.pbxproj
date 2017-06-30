@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0B3A512E1F05B5DA008F6669 /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3A512D1F05B5DA008F6669 /* PhotoModel.swift */; };
+		0B3A51331F05C711008F6669 /* PhotoBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3A51321F05C711008F6669 /* PhotoBuilder.swift */; };
+		0B3A51351F05C8B1008F6669 /* PhotoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3A51341F05C8B1008F6669 /* PhotoHandler.swift */; };
 		0BD26A561EF884E300560714 /* TextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD26A551EF884E300560714 /* TextModel.swift */; };
 		0BD26A581EF887AF00560714 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD26A571EF887AF00560714 /* DataSource.swift */; };
 		0BD26A5A1EF887D100560714 /* ChatItemsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD26A591EF887D100560714 /* ChatItemsController.swift */; };
@@ -24,6 +26,8 @@
 
 /* Begin PBXFileReference section */
 		0B3A512D1F05B5DA008F6669 /* PhotoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
+		0B3A51321F05C711008F6669 /* PhotoBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBuilder.swift; sourceTree = "<group>"; };
+		0B3A51341F05C8B1008F6669 /* PhotoHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoHandler.swift; sourceTree = "<group>"; };
 		0BD26A551EF884E300560714 /* TextModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextModel.swift; sourceTree = "<group>"; };
 		0BD26A571EF887AF00560714 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		0BD26A591EF887D100560714 /* ChatItemsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatItemsController.swift; sourceTree = "<group>"; };
@@ -58,6 +62,8 @@
 			isa = PBXGroup;
 			children = (
 				0B3A512D1F05B5DA008F6669 /* PhotoModel.swift */,
+				0B3A51321F05C711008F6669 /* PhotoBuilder.swift */,
+				0B3A51341F05C8B1008F6669 /* PhotoHandler.swift */,
 			);
 			name = "Photo Message";
 			sourceTree = "<group>";
@@ -249,12 +255,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B3A51331F05C711008F6669 /* PhotoBuilder.swift in Sources */,
 				0B3A512E1F05B5DA008F6669 /* PhotoModel.swift in Sources */,
 				0BD26A6B1EF8A84B00560714 /* TextBuilder.swift in Sources */,
 				0BD26A5A1EF887D100560714 /* ChatItemsController.swift in Sources */,
 				0BD26A561EF884E300560714 /* TextModel.swift in Sources */,
 				0BF404D81EF87BE100BC68CE /* ChatLogController.swift in Sources */,
 				0BD26A581EF887AF00560714 /* DataSource.swift in Sources */,
+				0B3A51351F05C8B1008F6669 /* PhotoHandler.swift in Sources */,
 				0BF404D61EF87BE100BC68CE /* AppDelegate.swift in Sources */,
 				0BD26A5C1EF8890F00560714 /* Decorator.swift in Sources */,
 				0BD26A691EF8A84200560714 /* TextHandler.swift in Sources */,
