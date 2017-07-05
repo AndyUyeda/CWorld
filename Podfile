@@ -9,5 +9,6 @@ target 'MyChatApp' do
 
 pod 'Chatto'
 pod 'ChattoAdditions'
+pod 'Firebase/Core'
 
 end

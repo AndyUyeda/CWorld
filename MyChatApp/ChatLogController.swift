@@ -84,6 +84,7 @@ class ChatLogController: BaseChatViewController {
         self.dataSource = DataSource(totalMessages: totalMessages)
         self.chatDataSource = self.dataSource
         self.chatItemsDecorator = self.decorator
+        self.constants.preferredMaxMessageCount = 300
     }
 
     override func didReceiveMemoryWarning() {
