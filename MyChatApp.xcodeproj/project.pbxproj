@@ -17,6 +17,9 @@
 		0BD26A5C1EF8890F00560714 /* Decorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD26A5B1EF8890F00560714 /* Decorator.swift */; };
 		0BD26A691EF8A84200560714 /* TextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD26A681EF8A84200560714 /* TextHandler.swift */; };
 		0BD26A6B1EF8A84B00560714 /* TextBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD26A6A1EF8A84B00560714 /* TextBuilder.swift */; };
+		0BEA72431F0EF1D10051C99B /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEA72421F0EF1D10051C99B /* SignInViewController.swift */; };
+		0BEA72451F0EF1E00051C99B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEA72441F0EF1E00051C99B /* SignUpViewController.swift */; };
+		0BEA72471F0EF2EA0051C99B /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEA72461F0EF2EA0051C99B /* Helpers.swift */; };
 		0BF404D61EF87BE100BC68CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF404D51EF87BE100BC68CE /* AppDelegate.swift */; };
 		0BF404D81EF87BE100BC68CE /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF404D71EF87BE100BC68CE /* ChatLogController.swift */; };
 		0BF404DB1EF87BE100BC68CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BF404D91EF87BE100BC68CE /* Main.storyboard */; };
@@ -36,6 +39,9 @@
 		0BD26A5B1EF8890F00560714 /* Decorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decorator.swift; sourceTree = "<group>"; };
 		0BD26A681EF8A84200560714 /* TextHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextHandler.swift; sourceTree = "<group>"; };
 		0BD26A6A1EF8A84B00560714 /* TextBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextBuilder.swift; sourceTree = "<group>"; };
+		0BEA72421F0EF1D10051C99B /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		0BEA72441F0EF1E00051C99B /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		0BEA72461F0EF2EA0051C99B /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		0BF404D21EF87BE100BC68CE /* MyChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BF404D51EF87BE100BC68CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BF404D71EF87BE100BC68CE /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
@@ -102,12 +108,15 @@
 			isa = PBXGroup;
 			children = (
 				0BF404D51EF87BE100BC68CE /* AppDelegate.swift */,
+				0BEA72441F0EF1E00051C99B /* SignUpViewController.swift */,
+				0BEA72421F0EF1D10051C99B /* SignInViewController.swift */,
 				0BD26A5B1EF8890F00560714 /* Decorator.swift */,
 				0BF404D71EF87BE100BC68CE /* ChatLogController.swift */,
 				0BD26A571EF887AF00560714 /* DataSource.swift */,
 				0BD26A591EF887D100560714 /* ChatItemsController.swift */,
 				0BD26A541EF884D100560714 /* Text Message */,
 				0B3A512C1F05B5C1008F6669 /* Photo Message */,
+				0BEA72461F0EF2EA0051C99B /* Helpers.swift */,
 				0BF404D91EF87BE100BC68CE /* Main.storyboard */,
 				0BF404DC1EF87BE100BC68CE /* Assets.xcassets */,
 				0BF404DE1EF87BE100BC68CE /* LaunchScreen.storyboard */,
@@ -259,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B3A51331F05C711008F6669 /* PhotoBuilder.swift in Sources */,
+				0BEA72471F0EF2EA0051C99B /* Helpers.swift in Sources */,
 				0B3A512E1F05B5DA008F6669 /* PhotoModel.swift in Sources */,
 				0BD26A6B1EF8A84B00560714 /* TextBuilder.swift in Sources */,
 				0BD26A5A1EF887D100560714 /* ChatItemsController.swift in Sources */,
@@ -266,8 +276,10 @@
 				0BF404D81EF87BE100BC68CE /* ChatLogController.swift in Sources */,
 				0BD26A581EF887AF00560714 /* DataSource.swift in Sources */,
 				0B3A51351F05C8B1008F6669 /* PhotoHandler.swift in Sources */,
+				0BEA72431F0EF1D10051C99B /* SignInViewController.swift in Sources */,
 				0BF404D61EF87BE100BC68CE /* AppDelegate.swift in Sources */,
 				0BD26A5C1EF8890F00560714 /* Decorator.swift in Sources */,
+				0BEA72451F0EF1E00051C99B /* SignUpViewController.swift in Sources */,
 				0BD26A691EF8A84200560714 /* TextHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
