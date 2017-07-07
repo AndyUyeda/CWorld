@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 class SignInViewController: UIViewController {
 
     @IBOutlet weak var password: UITextField!
@@ -25,6 +25,17 @@ class SignInViewController: UIViewController {
     }
     
     @IBAction func SignIn(_ sender: Any) {
+        
+
+        guard let email = email.text, let password = password.text else {return}
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            print("success")
+        }
     }
 
     @IBAction func SignUp(_ sender: Any) {
