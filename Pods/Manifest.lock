@@ -36,6 +36,7 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.10)
+  - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - Chatto
@@ -43,6 +44,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
+  - SwiftyJSON
 
 SPEC CHECKSUMS:
   Chatto: d959be2d284db62c713c68d7c39f2712ff902fa2
@@ -55,7 +57,8 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 29f522bb6e63ef034861ebb72449a6812130b0cf
+PODFILE CHECKSUM: 24673b1e0773554f47730ea5315f4d9ea348a506
 
 COCOAPODS: 1.2.1

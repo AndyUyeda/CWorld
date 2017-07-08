@@ -38,7 +38,7 @@ class SignInViewController: UIViewController {
     @IBAction func SignUp(_ sender: Any) {
         
         let controller = storyboard?.instantiateViewController(withIdentifier: "SIGNUP") as! SignUpViewController
-        self.present(controller, animated: true, completion: nil)
+        self.navigationController?.show(controller, sender: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
