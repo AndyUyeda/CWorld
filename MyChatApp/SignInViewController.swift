@@ -29,9 +29,9 @@ class SignInViewController: UIViewController {
 
         guard let email = email.text, let password = password.text else {return}
         
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
             if let error = error {
-                print(error.localizedDescription)
+                self?.alert(message: error.localizedDescription)
                 return
             }
             print("success")

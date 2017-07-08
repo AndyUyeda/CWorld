@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 class SignUpViewController: UIViewController {
 
     @IBOutlet weak var fullname: UITextField!
@@ -30,12 +31,13 @@ class SignUpViewController: UIViewController {
         
         guard let email = email.text, let password = password.text, let fullname = fullname.text else {return}
         
-        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] (user, error) in
             if let error = error {
             
-                print(error.localizedDescription)
+                self?.alert(message: error.localizedDescription)
                 return
             }
+            Database.database().reference().child("Users").child(user!.uid).updateChildValues(["email": email, "name": fullname])
             print("success")
         }
         

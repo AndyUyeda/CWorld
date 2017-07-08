@@ -41,7 +41,7 @@ class ChatLogController: BaseChatViewController {
     
     func handleSend() -> TextChatInputItem {
     let item = TextChatInputItem()
-        item.textInputHandler = { text in
+        item.textInputHandler = { [weak self] text in
         
         let date = Date()
         let double = date.timeIntervalSinceReferenceDate
@@ -49,7 +49,7 @@ class ChatLogController: BaseChatViewController {
         
             let message = MessageModel(uid: "\(senderId, double)", senderId: senderId, type: TextModel.chatItemType, isIncoming: false, date: date, status: .success)
             let textMessage = TextModel(messageModel: message, text: text)
-            self.dataSource.addMessage(message: textMessage)
+            self?.dataSource.addMessage(message: textMessage)
         
         }
     return item
@@ -57,7 +57,7 @@ class ChatLogController: BaseChatViewController {
     
     func handlePhoto() -> PhotosChatInputItem {
     let item = PhotosChatInputItem(presentingController: self)
-        item.photoInputHandler = { photo in
+        item.photoInputHandler = { [weak self] photo in
          
             let date = Date()
             let double = date.timeIntervalSinceReferenceDate
@@ -65,7 +65,7 @@ class ChatLogController: BaseChatViewController {
             
             let message = MessageModel(uid: "\(senderId, double)", senderId: senderId, type: PhotoModel.chatItemType, isIncoming: false, date: date, status: .success)
             let photoMessage = PhotoModel(messageModel: message, imageSize: photo.size, image: photo)
-            self.dataSource.addMessage(message: photoMessage)
+            self?.dataSource.addMessage(message: photoMessage)
 
         }
         
