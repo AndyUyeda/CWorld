@@ -19,10 +19,6 @@ class SignInViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(hidingKeyboard), name: NSNotification.Name(rawValue: "UIKeyboardWillHideNotification"), object: nil)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     @IBAction func SignIn(_ sender: Any) {
         
@@ -34,7 +30,8 @@ class SignInViewController: UIViewController {
                 self?.alert(message: error.localizedDescription)
                 return
             }
-            print("success")
+            let table = self?.storyboard?.instantiateViewController(withIdentifier: "table") as! MessagesTableViewController
+            self?.navigationController?.show(table, sender: nil)
         }
     }
 

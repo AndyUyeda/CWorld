@@ -38,13 +38,10 @@ class SignUpViewController: UIViewController {
                 return
             }
             Database.database().reference().child("Users").child(user!.uid).updateChildValues(["email": email, "name": fullname])
-            print("success")
+            let table = self?.storyboard?.instantiateViewController(withIdentifier: "table") as! MessagesTableViewController
+            self?.navigationController?.show(table, sender: nil)
         }
         
-    }
-    @IBAction func Back(_ sender: Any) {
-        
-        self.dismiss(animated: true, completion: nil)
     }
     /*
     // MARK: - Navigation
