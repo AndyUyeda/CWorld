@@ -11,6 +11,7 @@ import FirebaseAuth
 import SwiftyJSON
 import FirebaseDatabase
 import FirebaseDatabaseUI
+import Chatto
 class MessagesTableViewController: UIViewController, FUICollectionDelegate, UITableViewDelegate, UITableViewDataSource {
 
     
@@ -126,6 +127,15 @@ extension MessagesTableViewController {
         cell.Name.text = info?["name"] as? String
         cell.lastMessageDate.text = nil
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let chatlog = ChatLogController()
+        let uid = (Contacts[UInt(indexPath.row)] as? DataSnapshot)?.key
+        chatlog.userUID = uid!
+        chatlog.dataSource = DataSource(totalMessages: [ChatItemProtocol]())
+        self.navigationController?.show(chatlog, sender: nil)
+        self.tableView.deselectRow(at: indexPath, animated: true)
     }
   
 

@@ -9,13 +9,14 @@
 import UIKit
 import Chatto
 import ChattoAdditions
-
+import FirebaseAuth
+import FirebaseDatabase
 class ChatLogController: BaseChatViewController {
 
     var presenter: BasicChatInputBarPresenter!
     var decorator = Decorator()
     var dataSource: DataSource!
-    var totalMessages = [ChatItemProtocol]()
+    var userUID = String()
 
     
     override func createPresenterBuilders() -> [ChatItemType : [ChatItemPresenterBuilderProtocol]] {
@@ -45,12 +46,13 @@ class ChatLogController: BaseChatViewController {
         
         let date = Date()
         let double = date.timeIntervalSinceReferenceDate
-        let senderId = "me"
+        let senderId = Auth.auth().currentUser!.uid
+        let messageUID = (senderId + "\(double)").replacingOccurrences(of: ".", with: "")
         
-            let message = MessageModel(uid: "\(senderId, double)", senderId: senderId, type: TextModel.chatItemType, isIncoming: false, date: date, status: .success)
+            let message = MessageModel(uid: messageUID, senderId: senderId, type: TextModel.chatItemType, isIncoming: false, date: date, status: .sending)
             let textMessage = TextModel(messageModel: message, text: text)
             self?.dataSource.addMessage(message: textMessage)
-        
+            self?.sendOnlineTextMessage(text: text, uid: messageUID, double: double, senderId: senderId)
         }
     return item
     }
@@ -77,20 +79,34 @@ class ChatLogController: BaseChatViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for i in 1...295 {
-            totalMessages.append(TextModel(messageModel: MessageModel(uid: "\(i)", senderId: "\(i)", type: TextModel.chatItemType, isIncoming: false, date: Date(), status: .success), text: "\(i)"))
-        }
-
-        self.dataSource = DataSource(totalMessages: totalMessages)
         self.chatDataSource = self.dataSource
         self.chatItemsDecorator = self.decorator
         self.constants.preferredMaxMessageCount = 300
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func sendOnlineTextMessage(text: String, uid: String, double: Double, senderId: String) {
+        let message = ["text": text, "uid": uid, "date": double, "senderId": senderId, "status": "success"] as [String : Any]
+        let childUpdates = ["User-messages/\(senderId)/\(self.userUID)/\(uid)": message,
+                            "User-messages/\(self.userUID)/\(senderId)/\(uid)": message
+                            ]
+        
+        Database.database().reference().updateChildValues(childUpdates) { (error, _) in
+            
+            if error != nil {
+            
+                self.dataSource.updateTextMessage(uid: uid, status: .failed)
+                return
+            }
+            self.dataSource.updateTextMessage(uid: uid, status: .success)
+            
+        }
+    
+    
+    
+    
     }
+ 
 
 
 }

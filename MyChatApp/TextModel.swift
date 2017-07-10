@@ -19,4 +19,13 @@ class TextModel: TextMessageModel<MessageModel> {
         super.init(messageModel: messageModel, text: text)
     }
 
+    
+    var status: MessageStatus {
+    
+        get {
+            return self._messageModel.status
+        } set {
+            self._messageModel.status = newValue
+        }
+    }
 }

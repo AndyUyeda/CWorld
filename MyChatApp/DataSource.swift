@@ -48,6 +48,20 @@ class DataSource: ChatDataSourceProtocol {
         self.controller.insertItem(message: message)
         self.delegate?.chatDataSourceDidUpdate(self)
     }
+    func updateTextMessage(uid: String, status: MessageStatus) {
+        if let index = self.controller.items.index(where: { (message) -> Bool in
+            return message.uid == uid
+        }) {
+        let message = self.controller.items[index] as! TextModel
+        message.status = status
+        self.delegate?.chatDataSourceDidUpdate(self)
+        }
+        
+    
+    
+    
+    
+    }
     
     
     func adjustNumberOfMessages(preferredMaxCount: Int?, focusPosition: Double, completion: (Bool) -> Void) {
