@@ -71,7 +71,11 @@ class MessagesTableViewController: UIViewController, FUICollectionDelegate, UITa
             }) {
             
                 
-                Database.database().reference().child("Users").child(Auth.auth().currentUser!.uid).child("Contacts").child(snapshot[index].key).updateChildValues(["email": snapshot[index].value["email"].stringValue, "name": snapshot[index].value["name"].stringValue])
+                
+                let allUpdates =  ["/Users/\(Auth.auth().currentUser!.uid)/Contacts/\(snapshot[index].key)": (["email": snapshot[index].value["email"].stringValue, "name": snapshot[index].value["name"].stringValue]),
+                                  "/Users/\(snapshot[index].key)/Contacts/\(Auth.auth().currentUser!.uid)": (["email": Auth.auth().currentUser!.email!, "name": Auth.auth().currentUser!.displayName!])]
+                Database.database().reference().updateChildValues(allUpdates)
+                
                 
                 
                 self?.alert(message: "success")
