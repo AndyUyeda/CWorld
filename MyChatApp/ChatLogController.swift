@@ -102,11 +102,12 @@ class ChatLogController: BaseChatViewController {
             
         }
     
-    
-    
-    
     }
  
+    deinit {
+    
+        print("deinit")
+    }
 
 
 }

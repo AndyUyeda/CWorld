@@ -13,7 +13,7 @@ import ChattoAdditions
 
 class DataSource: ChatDataSourceProtocol {
     
-    var delegate: ChatDataSourceDelegateProtocol?
+    weak var delegate: ChatDataSourceDelegateProtocol?
     
     var controller = ChatItemsController()
     
