@@ -44,16 +44,18 @@ class ChatLogController: BaseChatViewController {
     let item = TextChatInputItem()
         item.textInputHandler = { [weak self] text in
         
+            for i in 1...400 {
+                let text = "\(i)"
         let date = Date()
         let double = date.timeIntervalSinceReferenceDate
-        let senderId = Auth.auth().currentUser!.uid
+        let senderId = Me.uid
         let messageUID = (senderId + "\(double)").replacingOccurrences(of: ".", with: "")
         
             let message = MessageModel(uid: messageUID, senderId: senderId, type: TextModel.chatItemType, isIncoming: false, date: date, status: .sending)
             let textMessage = TextModel(messageModel: message, text: text)
             self?.dataSource.addMessage(message: textMessage)
             self?.sendOnlineTextMessage(text: text, uid: messageUID, double: double, senderId: senderId)
-        }
+            }}
     return item
     }
     
@@ -86,7 +88,7 @@ class ChatLogController: BaseChatViewController {
 
     
     func sendOnlineTextMessage(text: String, uid: String, double: Double, senderId: String) {
-        let message = ["text": text, "uid": uid, "date": double, "senderId": senderId, "status": "success"] as [String : Any]
+        let message = ["text": text, "uid": uid, "date": double, "senderId": senderId, "status": "success", "type": TextModel.chatItemType] as [String : Any]
         let childUpdates = ["User-messages/\(senderId)/\(self.userUID)/\(uid)": message,
                             "User-messages/\(self.userUID)/\(senderId)/\(uid)": message
                             ]

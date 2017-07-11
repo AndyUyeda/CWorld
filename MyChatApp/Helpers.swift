@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
-
-
+import ChattoAdditions
+import Chatto
+import SwiftyJSON
 
 extension UIViewController {
 
@@ -35,6 +36,22 @@ extension UIViewController {
     
     }
 
+}
+
+extension NSObject {
+
+
+    func convertToChatItemProtocol(messages: [JSON]) -> [ChatItemProtocol] {
+        var convertedMessages = [ChatItemProtocol]()
+        for message in messages {
+        
+            let senderId = message["senderId"].stringValue
+            let model = MessageModel(uid: message["uid"].stringValue, senderId: senderId, type: message["type"].stringValue, isIncoming: senderId == Me.uid ? false : true, date: Date(timeIntervalSinceReferenceDate: message["date"].doubleValue), status: message["status"] == "success" ? MessageStatus.success : MessageStatus.sending)
+            let textMessage = TextModel(messageModel: model, text: message["text"].stringValue)
+            convertedMessages.append(textMessage)
+        }
+    return convertedMessages
+    }
 
 
 

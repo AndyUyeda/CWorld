@@ -17,9 +17,9 @@ class DataSource: ChatDataSourceProtocol {
     
     var controller = ChatItemsController()
     
-    init(totalMessages: [ChatItemProtocol]) {
-        self.controller.totalMessages = totalMessages
-        self.controller.loadIntoItemsArray(messagedNeeded: min(totalMessages.count, 50))
+    init(initialMessages: [ChatItemProtocol]) {
+        self.controller.totalMessages = initialMessages
+        self.controller.loadIntoItemsArray(messagedNeeded: min(initialMessages.count, 50))
     }
     
     var chatItems: [ChatItemProtocol] {
@@ -32,7 +32,7 @@ class DataSource: ChatDataSourceProtocol {
     }
     
     var hasMorePrevious: Bool {
-        return controller.totalMessages.count - controller.items.count > 0
+        return false
     }
     
     func loadNext() {
