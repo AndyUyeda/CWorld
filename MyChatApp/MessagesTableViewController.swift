@@ -135,18 +135,18 @@ extension MessagesTableViewController {
         let reference = Database.database().reference().child("User-messages").child(Me.uid).child(uid).queryLimited(toLast: 51)
         self.tableView.isUserInteractionEnabled = false
         
-        reference.observeSingleEvent(of: .value, with: { (snapshot) in
+        reference.observeSingleEvent(of: .value, with: { [weak self] (snapshot) in
             
             let messages = Array(JSON(snapshot.value as Any).dictionaryValue.values).sorted(by: { (lhs, rhs) -> Bool in
                 return lhs["date"].doubleValue < rhs["date"].doubleValue
             })
-            let converted = self.convertToChatItemProtocol(messages: messages)
+            let converted = self!.convertToChatItemProtocol(messages: messages)
             let chatlog = ChatLogController()
             chatlog.userUID = uid
-            chatlog.dataSource = DataSource(initialMessages: converted)
-            self.navigationController?.show(chatlog, sender: nil)
-            self.tableView.deselectRow(at: indexPath, animated: true)
-            self.tableView.isUserInteractionEnabled = true
+            chatlog.dataSource = DataSource(initialMessages: converted, uid: uid)
+            self?.navigationController?.show(chatlog, sender: nil)
+            self?.tableView.deselectRow(at: indexPath, animated: true)
+            self?.tableView.isUserInteractionEnabled = true
 
         })
         

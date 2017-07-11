@@ -13,13 +13,16 @@ import ChattoAdditions
 
 class DataSource: ChatDataSourceProtocol {
     
+    
     weak var delegate: ChatDataSourceDelegateProtocol?
     
     var controller = ChatItemsController()
+    var currentlyLoading = false
     
-    init(initialMessages: [ChatItemProtocol]) {
-        self.controller.totalMessages = initialMessages
-        self.controller.loadIntoItemsArray(messagedNeeded: min(initialMessages.count, 50))
+    init(initialMessages: [ChatItemProtocol], uid: String) {
+        self.controller.initialMessages = initialMessages
+        self.controller.userUID = uid
+        self.controller.loadIntoItemsArray(messagedNeeded: min(initialMessages.count, 50), moreToLoad: initialMessages.count > 50)
     }
     
     var chatItems: [ChatItemProtocol] {
@@ -32,7 +35,7 @@ class DataSource: ChatDataSourceProtocol {
     }
     
     var hasMorePrevious: Bool {
-        return false
+        return controller.loadMore
     }
     
     func loadNext() {
@@ -40,8 +43,13 @@ class DataSource: ChatDataSourceProtocol {
     }
     
     func loadPrevious() {
-        controller.loadPrevious()
-        self.delegate?.chatDataSourceDidUpdate(self, updateType: .pagination)
+        if currentlyLoading == false {
+            currentlyLoading = true
+        controller.loadPrevious {
+            self.delegate?.chatDataSourceDidUpdate(self, updateType: .pagination)
+            self.currentlyLoading = false
+        }
+        }
     }
     
     func addMessage(message: ChatItemProtocol) {
