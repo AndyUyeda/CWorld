@@ -54,6 +54,7 @@ class ChatItemsController: NSObject {
     func adjustWindow() {
     
         self.items.removeFirst(200)
+        self.loadMore = true
     
     }
 }

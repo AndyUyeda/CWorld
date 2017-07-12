@@ -43,10 +43,8 @@ class ChatLogController: BaseChatViewController {
     func handleSend() -> TextChatInputItem {
     let item = TextChatInputItem()
         item.textInputHandler = { [weak self] text in
-        
-            for i in 1...400 {
-                let text = "\(i)"
-        let date = Date()
+
+            let date = Date()
         let double = date.timeIntervalSinceReferenceDate
         let senderId = Me.uid
         let messageUID = (senderId + "\(double)").replacingOccurrences(of: ".", with: "")
@@ -55,7 +53,8 @@ class ChatLogController: BaseChatViewController {
             let textMessage = TextModel(messageModel: message, text: text)
             self?.dataSource.addMessage(message: textMessage)
             self?.sendOnlineTextMessage(text: text, uid: messageUID, double: double, senderId: senderId)
-            }}
+            
+        }
     return item
     }
     
