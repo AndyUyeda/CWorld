@@ -144,6 +144,7 @@ extension MessagesTableViewController {
             let chatlog = ChatLogController()
             chatlog.userUID = uid
             chatlog.dataSource = DataSource(initialMessages: converted, uid: uid)
+            chatlog.MessagesArray = FUIArray(query: Database.database().reference().child("User-messages").child(Me.uid).child(uid).queryStarting(atValue: nil, childKey: converted.last?.uid), delegate: nil)
             self?.navigationController?.show(chatlog, sender: nil)
             self?.tableView.deselectRow(at: indexPath, animated: true)
             self?.tableView.isUserInteractionEnabled = true

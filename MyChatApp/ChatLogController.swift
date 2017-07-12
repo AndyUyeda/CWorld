@@ -11,12 +11,15 @@ import Chatto
 import ChattoAdditions
 import FirebaseAuth
 import FirebaseDatabase
-class ChatLogController: BaseChatViewController {
+import FirebaseDatabaseUI
+import SwiftyJSON
+class ChatLogController: BaseChatViewController, FUICollectionDelegate {
 
     var presenter: BasicChatInputBarPresenter!
     var decorator = Decorator()
     var dataSource: DataSource!
     var userUID = String()
+    var MessagesArray: FUIArray!
 
     
     override func createPresenterBuilders() -> [ChatItemType : [ChatItemPresenterBuilderProtocol]] {
@@ -83,6 +86,8 @@ class ChatLogController: BaseChatViewController {
         self.chatDataSource = self.dataSource
         self.chatItemsDecorator = self.decorator
         self.constants.preferredMaxMessageCount = 300
+        self.MessagesArray.observeQuery()
+        self.MessagesArray.delegate = self
     }
 
     
@@ -108,6 +113,28 @@ class ChatLogController: BaseChatViewController {
     deinit {
     
         print("deinit")
+    }
+
+
+}
+
+extension ChatLogController {
+
+    func array(_ array: FUICollection, didAdd object: Any, at index: UInt) {
+        let message = JSON((object as! DataSnapshot).value as Any)
+        let contains = self.dataSource.controller.items.contains { (collectionViewMessage) -> Bool in
+            return collectionViewMessage.uid == message["uid"].stringValue
+        }
+        
+        if contains == false {
+            let senderId = message["senderId"].stringValue
+            let model = MessageModel(uid: message["uid"].stringValue, senderId: senderId, type: message["type"].stringValue, isIncoming: senderId == Me.uid ? false : true, date: Date(timeIntervalSinceReferenceDate: message["date"].doubleValue), status: message["status"] == "success" ? MessageStatus.success : MessageStatus.sending)
+            let textMessage = TextModel(messageModel: model, text: message["text"].stringValue)
+            self.dataSource.addMessage(message: textMessage)
+
+        }
+        
+        
     }
 
 
