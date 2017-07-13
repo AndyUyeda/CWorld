@@ -124,9 +124,10 @@ extension MessagesTableViewController {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MessagesTableViewCell
-        let info = JSON((Contacts[(UInt(indexPath.row))] as? DataSnapshot)?.value as Any).dictionaryObject
-        cell.Name.text = info?["name"] as? String
-        cell.lastMessageDate.text = nil
+        let info = JSON((Contacts[(UInt(indexPath.row))] as? DataSnapshot)?.value as Any).dictionaryValue
+        cell.Name.text = info["name"]?.stringValue
+        cell.lastMessage.text = info["lastMessage"]?["text"].string
+        cell.lastMessageDate.text = dateFormatter(timestamp: info["lastMessage"]?["date"].double)
         return cell
     }
     
@@ -154,6 +155,26 @@ extension MessagesTableViewController {
     }
   
 
+    func dateFormatter(timestamp: Double?) -> String? {
+    
+        if let timestamp = timestamp {
+        let date = Date(timeIntervalSinceReferenceDate: timestamp)
+        let dateFormatter = DateFormatter()
+        let timeSinceDateInSeconds = Date().timeIntervalSince(date)
+            let secondInDays: TimeInterval = 24*60*60
+            if timeSinceDateInSeconds > 7 * secondInDays {
+                dateFormatter.dateFormat = "MM/dd/yy"
+            } else if timeSinceDateInSeconds > secondInDays {
+                dateFormatter.dateFormat = "EEE"
+            } else {
+                dateFormatter.dateFormat = "h:mm a"
+            }
+            return dateFormatter.string(from: date)
+        } else {
+            return nil
+        }
+    
+    }
 
 
 }
