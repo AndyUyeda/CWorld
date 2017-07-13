@@ -10,6 +10,7 @@ import UIKit
 
 class MessagesTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var newMessage: UIImageView!
     @IBOutlet weak var Name: UILabel!
     @IBOutlet weak var lastMessage: UILabel!
     @IBOutlet weak var lastMessageDate: UILabel!

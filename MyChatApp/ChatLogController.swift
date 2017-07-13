@@ -93,10 +93,12 @@ class ChatLogController: BaseChatViewController, FUICollectionDelegate {
     
     func sendOnlineTextMessage(text: String, uid: String, double: Double, senderId: String) {
         let message = ["text": text, "uid": uid, "date": double, "senderId": senderId, "status": "success", "type": TextModel.chatItemType] as [String : Any]
+        var friendMessage = message
+        friendMessage["new"] = true
         let childUpdates = ["User-messages/\(senderId)/\(self.userUID)/\(uid)": message,
                             "User-messages/\(self.userUID)/\(senderId)/\(uid)": message,
                             "Users/\(Me.uid)/Contacts/\(self.userUID)/lastMessage": message,
-                            "Users/\(self.userUID)/Contacts/\(Me.uid)/lastMessage": message,
+                            "Users/\(self.userUID)/Contacts/\(Me.uid)/lastMessage": friendMessage,
                             ]
         
         Database.database().reference().updateChildValues(childUpdates) { (error, _) in
@@ -124,12 +126,17 @@ extension ChatLogController {
 
     func array(_ array: FUICollection, didAdd object: Any, at index: UInt) {
         let message = JSON((object as! DataSnapshot).value as Any)
+        let senderId = message["senderId"].stringValue
+
+        if senderId == self.userUID {
+        
+        Database.database().reference().child("Users").child(Me.uid).child("Contacts").child(self.userUID).child("lastMessage").updateChildValues(["new":false])
+        }
         let contains = self.dataSource.controller.items.contains { (collectionViewMessage) -> Bool in
             return collectionViewMessage.uid == message["uid"].stringValue
         }
         
         if contains == false {
-            let senderId = message["senderId"].stringValue
             let model = MessageModel(uid: message["uid"].stringValue, senderId: senderId, type: message["type"].stringValue, isIncoming: senderId == Me.uid ? false : true, date: Date(timeIntervalSinceReferenceDate: message["date"].doubleValue), status: message["status"] == "success" ? MessageStatus.success : MessageStatus.sending)
             let textMessage = TextModel(messageModel: model, text: message["text"].stringValue)
             self.dataSource.addMessage(message: textMessage)

@@ -15,7 +15,11 @@ import Chatto
 class MessagesTableViewController: UIViewController, FUICollectionDelegate, UITableViewDelegate, UITableViewDataSource {
 
     
-    let Contacts = FUIArray(query: Database.database().reference().child("Users").child(Me.uid).child("Contacts"))
+    let Contacts = FUISortedArray(query: Database.database().reference().child("Users").child(Me.uid).child("Contacts"), delegate: nil) { (lhs, rhs) -> ComparisonResult in
+        let lhs = Date(timeIntervalSinceReferenceDate: JSON(lhs.value as Any)["lastMessage"]["date"].doubleValue)
+        let rhs = Date(timeIntervalSinceReferenceDate:JSON(rhs.value as Any)["lastMessage"]["date"].doubleValue)
+        return rhs.compare(lhs)
+    }
     
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -93,6 +97,11 @@ class MessagesTableViewController: UIViewController, FUICollectionDelegate, UITa
     
     
     }
+    
+    deinit {
+    
+        print("deinit")
+    }
 
 }
 
@@ -128,6 +137,7 @@ extension MessagesTableViewController {
         cell.Name.text = info["name"]?.stringValue
         cell.lastMessage.text = info["lastMessage"]?["text"].string
         cell.lastMessageDate.text = dateFormatter(timestamp: info["lastMessage"]?["date"].double)
+        cell.newMessage.isHidden = info["lastMessage"]?["new"].boolValue == false
         return cell
     }
     
@@ -175,6 +185,5 @@ extension MessagesTableViewController {
         }
     
     }
-
 
 }
