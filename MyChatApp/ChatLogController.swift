@@ -50,7 +50,7 @@ class ChatLogController: BaseChatViewController, FUICollectionDelegate {
             let date = Date()
         let double = date.timeIntervalSinceReferenceDate
         let senderId = Me.uid
-        let messageUID = (senderId + "\(double)").replacingOccurrences(of: ".", with: "")
+        let messageUID = ("\(double)" + senderId).replacingOccurrences(of: ".", with: "")
         
             let message = MessageModel(uid: messageUID, senderId: senderId, type: TextModel.chatItemType, isIncoming: false, date: date, status: .sending)
             let textMessage = TextModel(messageModel: message, text: text)
@@ -67,9 +67,10 @@ class ChatLogController: BaseChatViewController, FUICollectionDelegate {
          
             let date = Date()
             let double = date.timeIntervalSinceReferenceDate
-            let senderId = "me"
+            let senderId = Me.uid
+            let messageUID = ("\(double)" + senderId).replacingOccurrences(of: ".", with: "")
             
-            let message = MessageModel(uid: "\(senderId, double)", senderId: senderId, type: PhotoModel.chatItemType, isIncoming: false, date: date, status: .success)
+            let message = MessageModel(uid: messageUID, senderId: senderId, type: PhotoModel.chatItemType, isIncoming: false, date: date, status: .success)
             let photoMessage = PhotoModel(messageModel: message, imageSize: photo.size, image: photo)
             self?.dataSource.addMessage(message: photoMessage)
 
