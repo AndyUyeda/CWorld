@@ -23,6 +23,7 @@ class DataSource: ChatDataSourceProtocol {
         self.controller.initialMessages = initialMessages
         self.controller.userUID = uid
         self.controller.loadIntoItemsArray(messagedNeeded: min(initialMessages.count, 50), moreToLoad: initialMessages.count > 50)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLoadingPhoto), name: NSNotification.Name(rawValue: "updateImage"), object: nil)
     }
     
     var chatItems: [ChatItemProtocol] {
@@ -77,6 +78,20 @@ class DataSource: ChatDataSourceProtocol {
             self.delegate?.chatDataSourceDidUpdate(self)
         }
     }
+    @objc func updateLoadingPhoto(notification: Notification) {
+        let info = notification.userInfo as! [String: Any]
+        let image = info["image"] as! UIImage
+        let uid = info["uid"] as! String
+        if let index = self.controller.items.index(where: { (message) -> Bool in
+            return message.uid == uid
+        }){
+        let item = self.controller.items[index] as! PhotoModel
+        let model = MessageModel(uid: item.uid, senderId: item.senderId, type: item.type, isIncoming: item.isIncoming, date: item.date, status: item.status)
+        let photoMessage = PhotoModel(messageModel: model, imageSize: image.size, image: image)
+        self.controller.items[index] = photoMessage
+        self.delegate?.chatDataSourceDidUpdate(self)
+        }
+    }
     
     
 
@@ -89,6 +104,11 @@ class DataSource: ChatDataSourceProtocol {
             completion(false)
         }
         
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "updateImage"), object: nil)
+        print("deinit datasource")
     }
 
 
