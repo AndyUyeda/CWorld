@@ -13,6 +13,8 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseDatabaseUI
 import SwiftyJSON
+import FirebaseStorage
+import Kingfisher
 class ChatLogController: BaseChatViewController, FUICollectionDelegate {
 
     var presenter: BasicChatInputBarPresenter!
@@ -70,9 +72,10 @@ class ChatLogController: BaseChatViewController, FUICollectionDelegate {
             let senderId = Me.uid
             let messageUID = ("\(double)" + senderId).replacingOccurrences(of: ".", with: "")
             
-            let message = MessageModel(uid: messageUID, senderId: senderId, type: PhotoModel.chatItemType, isIncoming: false, date: date, status: .success)
+            let message = MessageModel(uid: messageUID, senderId: senderId, type: PhotoModel.chatItemType, isIncoming: false, date: date, status: .sending)
             let photoMessage = PhotoModel(messageModel: message, imageSize: photo.size, image: photo)
             self?.dataSource.addMessage(message: photoMessage)
+            self?.uploadToStorage(photo: photoMessage)
 
         }
         
@@ -94,25 +97,61 @@ class ChatLogController: BaseChatViewController, FUICollectionDelegate {
     
     func sendOnlineTextMessage(text: String, uid: String, double: Double, senderId: String) {
         let message = ["text": text, "uid": uid, "date": double, "senderId": senderId, "status": "success", "type": TextModel.chatItemType] as [String : Any]
-        var friendMessage = message
-        friendMessage["new"] = true
         let childUpdates = ["User-messages/\(senderId)/\(self.userUID)/\(uid)": message,
                             "User-messages/\(self.userUID)/\(senderId)/\(uid)": message,
                             "Users/\(Me.uid)/Contacts/\(self.userUID)/lastMessage": message,
-                            "Users/\(self.userUID)/Contacts/\(Me.uid)/lastMessage": friendMessage,
+                            "Users/\(self.userUID)/Contacts/\(Me.uid)/lastMessage": message,
                             ]
         
-        Database.database().reference().updateChildValues(childUpdates) { (error, _) in
+        Database.database().reference().updateChildValues(childUpdates) { [weak self] (error, _) in
             
             if error != nil {
             
-                self.dataSource.updateTextMessage(uid: uid, status: .failed)
+                self?.dataSource.updateTextMessage(uid: uid, status: .failed)
                 return
             }
-            self.dataSource.updateTextMessage(uid: uid, status: .success)
+            self?.dataSource.updateTextMessage(uid: uid, status: .success)
             
         }
     
+    }
+    
+    
+    func uploadToStorage(photo: PhotoModel) {
+        let imageName = photo.uid
+        let storage = Storage.storage().reference().child("images").child(imageName)
+        let data = UIImagePNGRepresentation(photo.image)
+            storage.putData(data!, metadata: nil) { [weak self] (metadata, error) in
+                
+                if let imageURL = metadata?.downloadURL()?.absoluteString {
+                        self?.sendOnlineImageMessage(photoMessage: photo, imageURL: imageURL)
+                } else {
+                    self?.dataSource.updatePhotoMessage(uid: photo.uid, status: .failed)
+                }
+        }
+        
+    }
+    
+    func sendOnlineImageMessage(photoMessage: PhotoModel, imageURL: String) {
+    
+    
+        let message = ["image": imageURL, "uid": photoMessage.uid, "date": photoMessage.date.timeIntervalSinceReferenceDate, "senderId": photoMessage.senderId, "status": "success", "type": PhotoModel.chatItemType] as [String : Any]
+        
+        let childUpdates = ["User-messages/\(photoMessage.senderId)/\(self.userUID)/\(photoMessage.uid)": message,
+                            "User-messages/\(self.userUID)/\(photoMessage.senderId)/\(photoMessage.uid)": message,
+                            "Users/\(Me.uid)/Contacts/\(self.userUID)/lastMessage": message,
+                            "Users/\(self.userUID)/Contacts/\(Me.uid)/lastMessage": message,
+                            ]
+        
+        Database.database().reference().updateChildValues(childUpdates) { [weak self] (error, _) in
+            
+            if error != nil {
+                
+                self?.dataSource.updatePhotoMessage(uid: photoMessage.uid, status: .failed)
+                return
+            }
+            self?.dataSource.updatePhotoMessage(uid: photoMessage.uid, status: .success)
+        }
     }
  
     deinit {
@@ -128,19 +167,35 @@ extension ChatLogController {
     func array(_ array: FUICollection, didAdd object: Any, at index: UInt) {
         let message = JSON((object as! DataSnapshot).value as Any)
         let senderId = message["senderId"].stringValue
-
-        if senderId == self.userUID {
-        
-        Database.database().reference().child("Users").child(Me.uid).child("Contacts").child(self.userUID).child("lastMessage").updateChildValues(["new":false])
-        }
+        let type = message["type"].stringValue
         let contains = self.dataSource.controller.items.contains { (collectionViewMessage) -> Bool in
             return collectionViewMessage.uid == message["uid"].stringValue
         }
         
         if contains == false {
-            let model = MessageModel(uid: message["uid"].stringValue, senderId: senderId, type: message["type"].stringValue, isIncoming: senderId == Me.uid ? false : true, date: Date(timeIntervalSinceReferenceDate: message["date"].doubleValue), status: message["status"] == "success" ? MessageStatus.success : MessageStatus.sending)
-            let textMessage = TextModel(messageModel: model, text: message["text"].stringValue)
-            self.dataSource.addMessage(message: textMessage)
+            
+            
+            let model = MessageModel(uid: message["uid"].stringValue, senderId: senderId, type: type, isIncoming: senderId == Me.uid ? false : true, date: Date(timeIntervalSinceReferenceDate: message["date"].doubleValue), status: message["status"] == "success" ? MessageStatus.success : MessageStatus.sending)
+            
+            if type == TextModel.chatItemType {
+                let textMessage = TextModel(messageModel: model, text: message["text"].stringValue)
+                self.dataSource.addMessage(message: textMessage)
+            } else if type == PhotoModel.chatItemType {
+                KingfisherManager.shared.retrieveImage(with: URL(string: message["image"].stringValue)!, options: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, _, _) in
+                    
+                    if error != nil {
+                        self?.alert(message: "error receiving image from friend")
+                    } else {
+                    
+                        let photoMessage = PhotoModel(messageModel: model, imageSize: image!.size, image: image!)
+                        self?.dataSource.addMessage(message: photoMessage)
+                    }
+                })
+            
+                
+            }
+            
+            
 
         }
         

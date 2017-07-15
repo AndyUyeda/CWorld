@@ -124,7 +124,7 @@ extension MessagesTableViewController {
         
     }
     func array(_ array: FUICollection, didChange object: Any, at index: UInt) {
-        self.tableView.reloadRows (at: [IndexPath(row: Int(index), section: 0)], with: .automatic)
+        self.tableView.reloadRows (at: [IndexPath(row: Int(index), section: 0)], with: .none)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -137,7 +137,6 @@ extension MessagesTableViewController {
         cell.Name.text = info["name"]?.stringValue
         cell.lastMessage.text = info["lastMessage"]?["text"].string
         cell.lastMessageDate.text = dateFormatter(timestamp: info["lastMessage"]?["date"].double)
-        cell.newMessage.isHidden = info["lastMessage"]?["new"].boolValue == false
         return cell
     }
     

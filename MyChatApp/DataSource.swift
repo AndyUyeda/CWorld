@@ -64,14 +64,22 @@ class DataSource: ChatDataSourceProtocol {
         message.status = status
         self.delegate?.chatDataSourceDidUpdate(self)
         }
-        
-    
-    
-    
     
     }
     
     
+    func updatePhotoMessage(uid: String, status: MessageStatus) {
+        if let index = self.controller.items.index(where: { (message) -> Bool in
+            return message.uid == uid
+        }) {
+            let message = self.controller.items[index] as! PhotoModel
+            message.status = status
+            self.delegate?.chatDataSourceDidUpdate(self)
+        }
+    }
+    
+    
+
     func adjustNumberOfMessages(preferredMaxCount: Int?, focusPosition: Double, completion: (Bool) -> Void) {
         
         if focusPosition > 0.9 {

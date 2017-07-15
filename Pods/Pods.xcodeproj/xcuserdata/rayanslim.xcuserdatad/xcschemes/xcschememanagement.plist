@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Kingfisher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-MyChatApp.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,11 +42,6 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0564B72CA2E7F7D2BDCAE430F947DD72</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>0564C2782D1F2F8E464CB332E0FE7246</key>
 		<dict>
 			<key>primary</key>
@@ -63,11 +63,6 @@
 			<true/>
 		</dict>
 		<key>6EB01FD994DC50DEA2AFC920AEC1093A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>BF87BD3A9CE264BBC34D81BF8FF69325</key>
 		<dict>
 			<key>primary</key>
 			<true/>

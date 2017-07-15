@@ -14,4 +14,6 @@ pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod 'SwiftyJSON'
 pod 'FirebaseUI/Database', '~> 4.0'
+pod 'Firebase/Storage'
+pod 'Kingfisher'
 end
