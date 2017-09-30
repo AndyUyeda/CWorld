@@ -92,9 +92,12 @@ class GameBoardViewController: UIViewController, FUICollectionDelegate {
                     else if(colorArray[index] == "Black"){
                         button.backgroundColor = UIColor.black
                     }
+                    else if(colorArray[index] == "Tan"){
+                        button.backgroundColor = UIColor.bma_color(rgb: 0xc3c1b1)
+                    }
                     
                     if(statusArray[index] == "visible"){
-                        button.alpha = 0.1
+                        button.alpha = 0.20
                     }
                 }
                 else {
@@ -604,9 +607,12 @@ extension GameBoardViewController {
                     else if(colorArray[Int(i)] == "Black"){
                         buttonArray[Int(i)].backgroundColor = UIColor.black
                     }
+                    else if(colorArray[Int(i)] == "Tan"){
+                        buttonArray[Int(i)].backgroundColor = UIColor.bma_color(rgb: 0xc3c1b1)
+                    }
                     
                     if(statusArray[Int(i)] == "visible"){
-                        buttonArray[Int(i)].alpha = 0.1
+                        buttonArray[Int(i)].alpha = 0.20
                     }
                 }
                 else {
