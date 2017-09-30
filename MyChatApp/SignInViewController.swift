@@ -12,11 +12,17 @@ class SignInViewController: UIViewController {
 
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var email: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector(showingKeyboard), name: NSNotification.Name(rawValue: "UIKeyboardWillShowNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hidingKeyboard), name: NSNotification.Name(rawValue: "UIKeyboardWillHideNotification"), object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        email.text = UserDefaults.standard.string(forKey: "Email")
+        password.text = UserDefaults.standard.string(forKey: "Password")
     }
 
     
@@ -25,12 +31,15 @@ class SignInViewController: UIViewController {
 
         guard let email = email.text, let password = password.text else {return}
         
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
+        Auth.auth().signIn(withEmail: (email + "@cworld.com"), password: password) { [weak self] (user, error) in
             if let error = error {
                 self?.alert(message: error.localizedDescription)
                 return
             }
             let table = self?.storyboard?.instantiateViewController(withIdentifier: "table") as! MessagesTableViewController
+            
+            UserDefaults.standard.set(email, forKey: "Email")
+            UserDefaults.standard.set(password, forKey: "Password")
             self?.navigationController?.show(table, sender: nil)
         }
     }
@@ -44,14 +53,5 @@ class SignInViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

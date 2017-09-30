@@ -2,28 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>New item</key>
-	<string></string>
 	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
 	<string>ca-app-pub-3940256099942544/2934735716</string>
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>1007784904872-udsuhcvbiccbk10brplr6n009usuav50.apps.googleusercontent.com</string>
+	<string>997212014526-jnffd22mng8hl78n3h166uehi7mjdivr.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1007784904872-udsuhcvbiccbk10brplr6n009usuav50</string>
+	<string>com.googleusercontent.apps.997212014526-jnffd22mng8hl78n3h166uehi7mjdivr</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD-raWXbra8MXKa02gFePzMYmYtLmTYPr0</string>
+	<string>AIzaSyDI_2LT0m6cY8A_lexcV9y5YQKVIZYRjlg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1007784904872</string>
+	<string>997212014526</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>Reveal-Inc.MyChatApp</string>
 	<key>PROJECT_ID</key>
-	<string>mychatapp-7a998</string>
+	<string>mychatapp-3ce0d</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mychatapp-7a998.appspot.com</string>
+	<string>mychatapp-3ce0d.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -35,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1007784904872:ios:9bbbe8944c5031b4</string>
+	<string>1:997212014526:ios:9bbbe8944c5031b4</string>
 	<key>DATABASE_URL</key>
-	<string>https://mychatapp-7a998.firebaseio.com</string>
+	<string>https://mychatapp-3ce0d.firebaseio.com</string>
 </dict>
 </plist>

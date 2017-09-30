@@ -12,10 +12,6 @@ import ChattoAdditions
 
 class Decorator: ChatItemsDecoratorProtocol {
     
-    
-
-
-    
     func decorateItems(_ chatItems: [ChatItemProtocol]) -> [DecoratedChatItem] {
         
         var decoratedItems = [DecoratedChatItem]()

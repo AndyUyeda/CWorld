@@ -10,9 +10,15 @@ import UIKit
 
 class MessagesTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var Name: UILabel!
+    @IBOutlet weak var teammate: UILabel!
+    @IBOutlet weak var otherGuesser: UILabel!
+    @IBOutlet weak var describingTeammate: UILabel!
+    @IBOutlet weak var otherDescriber: UILabel!
     @IBOutlet weak var lastMessage: UILabel!
     @IBOutlet weak var lastMessageDate: UILabel!
+    @IBOutlet weak var victoryImage: UIImageView!
+    @IBOutlet weak var defeatImage: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

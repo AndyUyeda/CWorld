@@ -13,34 +13,34 @@ import Chatto
 import SwiftyJSON
 import Kingfisher
 extension UIViewController {
-
-
+    
+    
     func showingKeyboard(notification: Notification) {
         
         if let keyboardHeight = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.height {
-        
-        self.view.frame.origin.y = -keyboardHeight
+            
+            self.view.frame.origin.y = -keyboardHeight
         }
-    
+        
     }
     
     func hidingKeyboard() {
         self.view.frame.origin.y = 0
     }
-
-    func alert(message: String) {
-    let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-    alertController.addAction(okAction)
-    self.present(alertController, animated: true, completion: nil)
     
+    func alert(message: String) {
+        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+        
     }
-
+    
 }
 
 extension NSObject {
-
-
+    
+    
     func convertToChatItemProtocol(messages: [JSON]) -> [ChatItemProtocol] {
         var convertedMessages = [ChatItemProtocol]()
         
@@ -51,14 +51,14 @@ extension NSObject {
                 let textMessage = TextModel(messageModel: model, text: message["text"].stringValue)
                 return textMessage
             } else {
-            
+                
                 let loading = #imageLiteral(resourceName: "loading")
                 let photoMessage = PhotoModel(messageModel: model, imageSize: loading.size, image: loading)
                 return photoMessage
             }
             
         })
-    return convertedMessages
+        return convertedMessages
     }
     
     func parseURLs(UID_URL: (key: String, value: String)) {
@@ -68,13 +68,13 @@ extension NSObject {
             if let image = image {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateImage"), object: nil, userInfo: ["image": image, "uid": uid])
             }
-            }
         }
-        
-    
-    
-    
     }
+    
+    
+    
+    
+}
 
 
 

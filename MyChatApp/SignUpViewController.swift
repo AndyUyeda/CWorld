@@ -27,13 +27,13 @@ class SignUpViewController: UIViewController {
         
         guard let email = email.text, let password = password.text, let fullname = fullname.text else {return}
         
-        Auth.auth().createUser(withEmail: email, password: password) { [weak self] (user, error) in
+        Auth.auth().createUser(withEmail: (email + "@cworld.com"), password: password) { [weak self] (user, error) in
             if let error = error {
             
                 self?.alert(message: error.localizedDescription)
                 return
             }
-            Database.database().reference().child("Users").child(user!.uid).updateChildValues(["email": email, "name": fullname])
+            Database.database().reference().child("Users").child(user!.uid).updateChildValues(["user": (email + "@cworld.com"), "name": fullname])
                 let changeRequest = user!.createProfileChangeRequest()
                 changeRequest.displayName = fullname
                 changeRequest.commitChanges(completion: nil)
