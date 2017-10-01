@@ -18,6 +18,7 @@ class MessagesTableViewCell: UITableViewCell {
     @IBOutlet weak var lastMessageDate: UILabel!
     @IBOutlet weak var victoryImage: UIImageView!
     @IBOutlet weak var defeatImage: UIImageView!
+    var myRole: String!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -31,6 +31,10 @@ class GameBoardViewController: UIViewController, FUICollectionDelegate {
     var redClueArray = [String]()
     var blueClueArray = [String]()
     var gameID : String!
+    var rdTitle: String!
+    var rgTitle: String!
+    var bdTitle: String!
+    var bgTitle: String!
     var currentPlayer : String!
     var rD : String!
     var rG : String!
@@ -462,7 +466,7 @@ class GameBoardViewController: UIViewController, FUICollectionDelegate {
         }
     }
     
-    func prepareBoard(game: [String : Any]) {
+    func prepareBoard(game: [String : Any], redDescriber: String, redGuesser: String, blueDescriber: String, blueGuesser: String) {
         let board = game["GameBoard"]! as! SwiftyJSON.JSON
         let roles = game["Roles"]! as! SwiftyJSON.JSON
         
@@ -485,6 +489,11 @@ class GameBoardViewController: UIViewController, FUICollectionDelegate {
         else {
             myRole = "Blue Describer"
         }
+        
+        rdTitle = redDescriber
+        rgTitle = redGuesser
+        bdTitle = blueDescriber
+        bgTitle = blueGuesser
         
         rD = (roles["redDescriber"].string)!
         rG = (roles["redGuesser"].string)!
@@ -656,16 +665,16 @@ extension GameBoardViewController {
     
     func updateCurrentPlayerStatus(){
         if(self.currentPlayer == self.bG){
-            self.navigationItem.title = "Blue is Guessing"
+            self.navigationItem.title = bgTitle
         }
         else if(self.currentPlayer == self.bD){
-            self.navigationItem.title = "Blue is Describing"
+            self.navigationItem.title = bdTitle
         }
         else if(self.currentPlayer == self.rD){
-            self.navigationItem.title = "Red is Describing"
+            self.navigationItem.title = rdTitle
         }
         else if(self.currentPlayer == self.rG){
-            self.navigationItem.title = "Red is Guessing"
+            self.navigationItem.title = rgTitle
         }
         else if(self.currentPlayer == "Win"){
             self.navigationItem.title = "You Won!"

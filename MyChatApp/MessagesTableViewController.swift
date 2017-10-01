@@ -14,6 +14,11 @@ import FirebaseDatabaseUI
 import Chatto
 class MessagesTableViewController: UIViewController, FUICollectionDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    var redDescriberName = "Red"
+    var redGuesserName = "Red"
+    var blueDescriberName = "Blue"
+    var blueGuesserName = "Blue"
+    var myRole = "Blue Guesser"
     
     let Games = FUISortedArray(query: Database.database().reference().child("Users").child(Me.uid).child("Games"), delegate: nil) { (lhs, rhs) -> ComparisonResult in
         let lhs = Date(timeIntervalSinceReferenceDate: JSON(lhs.value as Any)["Date"]["date"].doubleValue)
@@ -29,8 +34,6 @@ class MessagesTableViewController: UIViewController, FUICollectionDelegate, UITa
         self.tableView.delegate = self
         self.tableView.dataSource = self
         Database.database().reference().child("Users").child(Me.uid).child("Games").keepSynced(true)
-        
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func SignOut(_ sender: Any) {
@@ -46,9 +49,7 @@ class MessagesTableViewController: UIViewController, FUICollectionDelegate, UITa
         
         print("deinit")
     }
-    
 }
-
 
 extension MessagesTableViewController {
     
@@ -86,7 +87,7 @@ extension MessagesTableViewController {
         Database.database().reference().child("Users").observeSingleEvent(of: .value, with: { (snapshot) in
             let value = JSON(snapshot.value as Any).dictionaryValue
             if(Me.uid == rD){
-                
+                cell.myRole = "Red Describer"
                 cell.teammate.text = value[(info["Roles"]?["redGuesser"].stringValue)!]?["name"].string
                 cell.describingTeammate.text = "Give clues to"
                 cell.otherGuesser.text = value[(info["Roles"]?["blueGuesser"].stringValue)!]?["name"].string
@@ -99,6 +100,7 @@ extension MessagesTableViewController {
                 cell.otherDescriber.textColor = UIColor.blue
             }
             else if(Me.uid == rG){
+                cell.myRole = "Red Guesser"
                 cell.teammate.text = "is Code Master"
                 cell.describingTeammate.text = value[(info["Roles"]?["redDescriber"].stringValue)!]?["name"].string
                 
@@ -112,6 +114,7 @@ extension MessagesTableViewController {
                 cell.otherDescriber.textColor = UIColor.blue
             }
             else if(Me.uid == bG){
+                cell.myRole = "Blue Guesser"
                 cell.teammate.text = "is Code Master"
                 cell.describingTeammate.text = value[(info["Roles"]?["blueDescriber"].stringValue)!]?["name"].string
                 cell.otherGuesser.text = value[(info["Roles"]?["redGuesser"].stringValue)!]?["name"].string
@@ -125,6 +128,7 @@ extension MessagesTableViewController {
                 cell.otherDescriber.textColor = UIColor.red
             }
             else if(Me.uid == bD){
+                cell.myRole = "Blue Describer"
                 cell.teammate.text = value[(info["Roles"]?["blueGuesser"].stringValue)!]?["name"].string
                 cell.describingTeammate.text = "Give clues to"
                 cell.otherGuesser.text = value[(info["Roles"]?["redGuesser"].stringValue)!]?["name"].string
@@ -161,43 +165,45 @@ extension MessagesTableViewController {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        /*let uid = (Games[UInt(indexPath.row)] as? DataSnapshot)!.key
-         let reference = Database.database().reference().child("Users").child(Me.uid).child("Games").child(uid).queryLimited(toLast: 51)
-         self.tableView.isUserInteractionEnabled = false
-         
-         reference.observeSingleEvent(of: .value, with: { [weak self] (snapshot) in
-         
-         let messages = Array(JSON(snapshot.value as Any).dictionaryValue.values).sorted(by: { (lhs, rhs) -> Bool in
-         return lhs["date"].doubleValue < rhs["date"].doubleValue
-         })
-         let converted = self!.convertToChatItemProtocol(messages: messages)
-         let chatlog = ChatLogController()
-         chatlog.userUID = uid
-         chatlog.dataSource = DataSource(initialMessages: converted, uid: uid)
-         chatlog.MessagesArray = FUIArray(query: Database.database().reference().child("User-messages").child(Me.uid).child(uid).queryStarting(atValue: nil, childKey: converted.last?.uid), delegate: nil)
-         self?.navigationController?.show(chatlog, sender: nil)
-         self?.tableView.deselectRow(at: indexPath, animated: true)
-         self?.tableView.isUserInteractionEnabled = true
-         messages.filter({ (message) -> Bool in
-         return message["type"].stringValue == PhotoModel.chatItemType
-         }).forEach({ (message) in
-         self?.parseURLs(UID_URL: (key: message["uid"].stringValue, value: message["image"].stringValue))
-         })
-         
-         })*/
+        
+        let cell = tableView.cellForRow(at: indexPath) as! MessagesTableViewCell
+        myRole = cell.myRole
+        
+        if(myRole == "Red Describer"){
+            redDescriberName = "I am Describing"
+            redGuesserName = cell.teammate.text! + " is Guessing"
+            blueGuesserName = cell.otherGuesser.text! + " is Guessing"
+            blueDescriberName = cell.otherDescriber.text! + " is Describing"
+        }
+        else if(myRole == "Red Guesser"){
+            redGuesserName = "I am Guessing"
+            redDescriberName = cell.describingTeammate.text! + " is Describing"
+            blueGuesserName = cell.otherGuesser.text! + " is Guessing"
+            blueDescriberName = cell.otherDescriber.text! + " is Describing"
+        }
+        else if(myRole == "Blue Describer"){
+            blueDescriberName = "I am Describing"
+            blueGuesserName = cell.teammate.text! + " is Guessing"
+            redGuesserName = cell.otherGuesser.text! + " is Guessing"
+            redDescriberName = cell.otherDescriber.text! + " is Describing"
+        }
+        else if(myRole == "Blue Guesser"){
+            blueGuesserName = "I am Guessing"
+            blueDescriberName = cell.describingTeammate.text! + " is Describing"
+            redGuesserName = cell.otherGuesser.text! + " is Guessing"
+            redDescriberName = cell.otherDescriber.text! + " is Describing"
+        }
+        
         self.tableView.deselectRow(at: indexPath, animated: true)
         self.tableView.isUserInteractionEnabled = true
         performSegue(withIdentifier: "game", sender: (UInt(indexPath.row)))
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "game"){
             let info = JSON((Games[sender as! UInt] as? DataSnapshot)?.value as Any).dictionaryValue
             (segue.destination as? GameBoardViewController)?
-                .prepareBoard(
-                    game: info
-            )
+                .prepareBoard(game: info, redDescriber: redDescriberName, redGuesser: redGuesserName, blueDescriber: blueDescriberName, blueGuesser: blueGuesserName)
         }
     }
     
